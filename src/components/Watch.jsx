@@ -9,6 +9,7 @@ import moment from 'moment';
 import SuggestedVideosCard from './SuggestedVideosCard';
 import { IoIosArrowDown } from 'react-icons/io';
 import { RiArrowRightSLine } from 'react-icons/ri';
+import { useSelector } from 'react-redux';
 
 const Watch = () => {
   const [searchParams] = useSearchParams();
@@ -20,6 +21,7 @@ const Watch = () => {
   const [suggested, setSuggested] = useState([]);
   const [comments, setComments] = useState();
   const [showComments, setShowComments] = useState(true);
+  const {isDarkMode} = useSelector(store=>store.app);
   const getVideoById = async () => {
     try {
       const res = await axios.get(`https://www.googleapis.com/youtube/v3/videos`, {
@@ -78,8 +80,6 @@ const Watch = () => {
     }
   }
 
-
-
   const getCommentsByVideo = async () => {
     if (!videoId) return;
     try {
@@ -97,8 +97,6 @@ const Watch = () => {
     }
   };
   
-
-
   useEffect(() => {
     getVideoById();
     if (videoId) getCommentsByVideo();
@@ -141,7 +139,7 @@ const Watch = () => {
 
           {/* Like & Share Buttons */}
           <div className="flex gap-3 items-center flex-wrap">
-            <div className="flex items-center bg-gray-200 rounded-full px-4 py-2">
+            <div className={`flex items-center ${isDarkMode ? "bg-gray-500":"bg-gray-200 "} rounded-full px-4 py-2`}>
               <BiLike
                 className={`cursor-pointer ${liked ? "text-red-500" : ""}`}
                 onClick={() => setLiked(!liked)}
@@ -152,7 +150,7 @@ const Watch = () => {
               <BiDislike className="cursor-pointer" size="1.2rem" />
             </div>
 
-            <button className='flex items-center gap-2 px-4 py-2 bg-gray-200 rounded-full text-sm'>
+            <button className={`flex items-center gap-2 px-4 py-2 ${isDarkMode ? "bg-gray-500":"bg-gray-200"} rounded-full text-sm`}>
               <PiShareFat />
               Share
             </button>

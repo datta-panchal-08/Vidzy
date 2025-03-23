@@ -5,12 +5,13 @@ import { IoMdMic } from "react-icons/io";
 import vidzyLogo from '../assets/logo.png';
 import { RiCloseFill, RiVideoAddLine } from "react-icons/ri";
 import { FiMoon, FiSunrise } from "react-icons/fi";
-import { useDispatch } from "react-redux";
-import { setSidebarVisibility } from "../utils/AppSlice";
+import { useDispatch, useSelector } from "react-redux";
+import { setSidebarVisibility, toggleDarkMode } from "../utils/AppSlice";
 
-const Navbar = ({ isDarkMode, setIsDarkMode }) => {
+const Navbar = () => {
     const [isSerachActive, setSerachActive] = useState(false);
     const [input,setInput] = useState("")
+    const {isDarkMode} = useSelector((store)=>store.app);
     const dispatch = useDispatch();
 
 
@@ -22,7 +23,9 @@ const Navbar = ({ isDarkMode, setIsDarkMode }) => {
         dispatch(setSidebarVisibility());
     }
     return (
-        <div className="w-full sticky z-10 top-0 flex items-center bg-white justify-between md:px-6 lg:px-6 px-2 py-2">
+        <div className={`w-full sticky top-0 z-50 flex items-center justify-between px-4 md:px-6 py-2 shadow-md transition-colors duration-300 ${
+            isDarkMode ? "bg-gray-900 text-white" : "bg-white text-black"
+        }`}>
 
             {/* Left navbar */}
             <div className={`flex w-[20%] items-center md:gap-5 lg:gap-5 gap-2 ${isSerachActive === true ? "hidden" : "block"}`}>
@@ -44,10 +47,11 @@ const Navbar = ({ isDarkMode, setIsDarkMode }) => {
                 <div className="w-full max-w-[400px] rounded-l-full px-3 py-2 border border-gray-300">
                     <input onChange={(e)=>serachHandler(e.target.value)} type="text" className="outline-none w-full" placeholder="Search" />
                 </div>
-                <button className="px-4 bg-gray-100 py-2 rounded-r-full border-gray-300 border">
+                <button className={`px-4 $
+                    {isDarkMode ? "bg-gray-800 text-white":"bg-gray-100 text-black"} py-2 rounded-r-full border-gray-300 border`}>
                     <CiSearch size={"24px"} />
                 </button>
-                <IoMdMic size={"42px"} className="ml-3 rounded-full hidden md:block lg:block p-2 hover:bg-gray-200 cursor-pointer duration-200" />
+                <IoMdMic size={"42px"} className={`ml-3 rounded-full hidden md:block lg:block p-2 ${isDarkMode ? "hover:bg-gray-700 text-white":"hover:bg-gray-200 text-black"} cursor-pointer duration-200`} />
             </div>
 
             {/* Profile and other icons */}
@@ -62,10 +66,10 @@ const Navbar = ({ isDarkMode, setIsDarkMode }) => {
                     )
                 }
                 {
-                    isDarkMode === false ? (
-                        <FiSunrise onClick={() => setIsDarkMode(!isDarkMode)} className="text-2xl block" />
+                    isDarkMode === true ? (
+                        <FiSunrise onClick={() => dispatch(toggleDarkMode())} className={`${isDarkMode ? "text-amber-400":""} cursor-pointer text-2xl block`} />
                     ) : (
-                        <FiMoon onClick={() => setIsDarkMode(!isDarkMode)} className="text-2xl block" />
+                        <FiMoon onClick={() => dispatch(toggleDarkMode())} className={`text-2xl block cursor-pointer `} />
                     )
                 }
                 <img src="https://i.redd.it/s8mx3thw9v7b1.jpg" className="w-8 h-8 rounded-full" />

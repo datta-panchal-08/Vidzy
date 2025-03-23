@@ -4,6 +4,7 @@ const AppSlice = createSlice({
     name:"app",
     initialState:{
       isSidebarVisible:false,
+      isDarkMode:false,
       video:[],
       category:"All"
     },
@@ -16,10 +17,13 @@ const AppSlice = createSlice({
         },
         setCatgeory:(state,action) =>{
             state.category = action.payload;
+        },
+        toggleDarkMode:(state) =>{
+           state.isDarkMode = !state.isDarkMode;  
         } 
     }
 });
 
-export const {setSidebarVisibility,setVideo,setCatgeory} = AppSlice.actions;
+export const {setSidebarVisibility,setVideo,setCatgeory,toggleDarkMode} = AppSlice.actions;
 export default AppSlice.reducer;
 

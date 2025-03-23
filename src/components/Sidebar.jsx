@@ -21,8 +21,8 @@ import { SiMediafire, SiYoutubekids, SiYoutubemusic, SiYoutubeshorts, SiYoutubes
 import { useSelector } from "react-redux";
 
 const Sidebar = () => {
-   
   const { isSidebarVisible } = useSelector(store => store.app);
+  const {isDarkMode} = useSelector(store=>store.app);
   const sidebarItems = [
     {
       id: 1,
@@ -180,7 +180,9 @@ const Sidebar = () => {
       lg:h-screen 
       lg:w-[19%] lg:relative xl:h-[calc(100vh-4.100rem)] 2xl:h-[calc(100vh-6.6rem)] 
       md:h-[calc(100vh-4.100rem)] overflow-y-scroll overflow-x-hidden 
-      sm:w-[30%] md:w-[23%] xl:w-[19%] 2xl:w-[19%] absolute z-50 bg-white custom-scrollbar2
+      sm:w-[30%] md:w-[23%] xl:w-[19%] 2xl:w-[19%] absolute z-50 
+      ${isDarkMode ? "bg-gray-900":"bg-white"}
+      custom-scrollbar2
     `}
   >
   
