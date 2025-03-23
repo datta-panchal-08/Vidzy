@@ -14,6 +14,8 @@ import { useSelector } from 'react-redux';
 const Watch = () => {
   const [searchParams] = useSearchParams();
   const videoId = searchParams.get('v');
+  console.log(videoId);
+  
   const [videodetails, setVideoDetails] = useState();
   const [ytIcon, setYtIcon] = useState();
   const [liked, setLiked] = useState(false);
@@ -22,13 +24,14 @@ const Watch = () => {
   const [comments, setComments] = useState();
   const [showComments, setShowComments] = useState(true);
   const {isDarkMode} = useSelector(store=>store.app);
+
   const getVideoById = async () => {
     try {
       const res = await axios.get(`https://www.googleapis.com/youtube/v3/videos`, {
         params: {
           part: "snippet,statistics",
           key: API_KEY,
-          id: videoId || videoId.id
+          id: videoId
         }
       });
       setVideoDetails(res.data.items[0]);
