@@ -1,9 +1,10 @@
 import React, { useState } from 'react'
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { setCatgeory } from '../utils/AppSlice';
 
 const ButtonList = () => {
   const [active,setActive] = useState("All");
+  const {isDarkMode} = useSelector(store=>store.app);
   const dispatch = useDispatch();
   const categories = [
     "All",
@@ -26,16 +27,16 @@ const ButtonList = () => {
     "Learn Coding",
   ];
 
+
   const getVideoByTag = (tag) =>{
     if(active !== tag){
     setActive(tag);
     dispatch(setCatgeory(tag));
   }
 }
-console.log(active);
 
   return (
-    <div className="flex flex-nowrap overflow-x-auto custom-scrollbar1 gap-5 sticky top-0 bg-white">
+    <div className={`flex flex-nowrap overflow-x-auto custom-scrollbar1 gap-5 sticky top-0 ${isDarkMode ? "bg-gray-900 text-white":"bg-white"}`}>
       {categories?.map((category,index) => (
         <div
           key={index}
